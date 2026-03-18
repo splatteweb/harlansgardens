@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harlan's Gardens — Plants, Landscaping & Lawns</title>
+  <link rel="stylesheet" href="booking.css">
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --hero:        #384E4E;
+      --hero-dark:   #263636;
+      --accent:      #6e9e8a;
+      --cream:       #f0ebe0;
+      --tan:         #ddd4be;
+      --stone:       #c2b89e;
+      --brown:       #7a5c3a;
+      --text:        #252420;
+      --muted:       #6b6356;
+      --error:       #b84c4c;
+      --sans: system-ui, -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      color: var(--text);
+      background: var(--cream);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    /* ── NAV ─────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      background: rgba(38, 54, 54, 0.96);
+      backdrop-filter: blur(6px);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 48px;
+    }
+
+    .nav-logo {
+      color: var(--cream);
+      font-size: 18px;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      color: rgba(245,240,232,0.8);
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--cream); }
+
+    /* ── HERO ────────────────────────────────── */
+    #hero {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 80px 48px;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      background: var(--hero);
+    }
+
+    .hero-photo img {
+      height: 100%;
+      object-position: center;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 55%, transparent 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .hero-content h1 {
+      font-size: 72px;
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .hero-content p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.85);
+      max-width: 480px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: var(--hero); }
+
+    /* ── SERVICES ────────────────────────────── */
+    #services {
+      padding: 100px 48px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 44px;
+      font-weight: 400;
+      color: var(--hero-dark);
+      margin-bottom: 60px;
+    }
+
+    .services-grid {
+      display: flex;
+      flex-direction: row;
+      gap: 32px;
+    }
+
+    .service-card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .service-card-photo {
+      width: 100%;
+      height: 220px;
+      background: var(--tan);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .service-card-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .service-card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 28px;
+      border-top: 3px solid var(--accent);
+    }
+
+    .service-icon { font-size: 28px; }
+
+    .service-card h3 {
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--hero-dark);
+    }
+
+    .service-card p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── ABOUT ───────────────────────────────── */
+    #about {
+      padding: 100px 48px;
+      background: var(--cream);
+      display: flex;
+      flex-direction: row;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-photo {
+      flex: 1;
+      aspect-ratio: 4/5;
+      background: var(--tan);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .about-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .about-text .section-title { margin-bottom: 8px; }
+
+    .about-name {
+      margin-top: 16px;
+      font-size: 18px;
+      color: var(--hero-dark);
+    }
+
+    .about-title-tag {
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── TESTIMONIALS ────────────────────────── */
+    #testimonials {
+      padding: 100px 48px;
+      background: var(--hero-dark);
+      display: flex;
+      flex-direction: column;
+    }
+
+    #testimonials .section-label { color: var(--accent); }
+    #testimonials .section-title { color: var(--cream); }
+
+    .testimonials-grid {
+      display: flex;
+      flex-direction: row;
+      gap: 32px;
+    }
+
+    .testimonial {
+      flex: 1;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .testimonial blockquote {
+      font-size: 15px;
+      color: rgba(245,240,232,0.85);
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .author-photo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--hero);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .author-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .author-name {
+      font-size: 14px;
+      color: var(--cream);
+      font-weight: 600;
+    }
+
+    .author-location {
+      font-size: 12px;
+      color: rgba(245,240,232,0.5);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── CONTACT ─────────────────────────────── */
+    #contact {
+      padding: 100px 48px;
+      background: var(--tan);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    #contact .section-title { margin-bottom: 0; }
+
+    .contact-desc {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 520px;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+      justify-content: center;
+    }
+
+    .contact-detail {
+      font-size: 14px;
+      color: var(--brown);
+      letter-spacing: 0.03em;
+    }
+
+    /* ── FOOTER ──────────────────────────────── */
+    footer {
+      background: var(--hero-dark);
+      color: rgba(245,240,232,0.5);
+      text-align: center;
+      padding: 32px 48px;
+      font-size: 13px;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+
+      #hero, #services, #about, #testimonials, #contact { padding-left: 24px; padding-right: 24px; }
+
+      .hero-content h1 { font-size: 48px; }
+      .section-title   { font-size: 32px; }
+
+      .services-grid, .testimonials-grid { flex-direction: column; }
+      .service-card-photo { height: 200px; }
+      #about { flex-direction: column; gap: 48px; }
+      .about-photo { aspect-ratio: 3/2; }
+      .contact-details { flex-direction: column; gap: 12px; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-content h1 { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Harlan's Gardens</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-photo">
+      <!-- Replace with: <img src="your-photo.jpg" alt="Harlan's Gardens landscaping work"> -->
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Harlan's Gardens</h1>
+      <p>Plants, Landscaping &amp; Lawns — beautifying homes and properties across the area since 1998.</p>
+      <a href="#contact" class="btn btn-primary">Book a Free Consultation</a>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <p class="section-label">What we do</p>
+    <h2 class="section-title">Our Services</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-card-photo">
+          <!-- Replace with: <img src="plants.jpg" alt="Describe what's shown, e.g. 'Colorful native perennials planted along a garden bed border'"> -->
+        </div>
+        <div class="service-card-body">
+          <div class="service-icon">🌿</div>
+          <h3>Plants</h3>
+          <p>Expert plant selection, installation, and ongoing care tailored to your soil, climate, and vision. From flowering perennials to native shrubs, we'll make it thrive.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-card-photo">
+          <!-- Replace with: <img src="landscaping.jpg" alt="Describe what's shown, e.g. 'Stone patio with retaining wall and garden beds installed in a residential backyard'"> -->
+        </div>
+        <div class="service-card-body">
+          <div class="service-icon">🏡</div>
+          <h3>Landscaping</h3>
+          <p>Full-service landscape design and installation — patios, walkways, retaining walls, garden beds, grading, and drainage. We transform outdoor spaces from the ground up.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-card-photo">
+          <!-- Replace with: <img src="lawns.jpg" alt="Describe what's shown, e.g. 'Freshly mowed and edged lawn with clean lines alongside a garden border'"> -->
+        </div>
+        <div class="service-card-body">
+          <div class="service-icon">✂️</div>
+          <h3>Lawns</h3>
+          <p>Mowing, edging, aeration, overseeding, fertilization, and seasonal cleanup. We keep your lawn healthy, green, and looking its best year-round.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-photo">
+      <!-- Replace with: <img src="harlan-photo.jpg" alt="Harlan"> -->
+    </div>
+    <div class="about-text">
+      <p class="section-label">Meet the gardener</p>
+      <h2 class="section-title">Hi, I'm Harlan.</h2>
+      <p>I've been working with plants and land my whole life. What started as helping my grandfather tend his garden grew into a lifelong passion — and eventually, a business built on honest work and genuine care for the outdoors.</p>
+      <p>Every property I work on gets my full attention. I don't take shortcuts, I don't rush the work, and I take real pride in leaving a yard better than I found it. Whether it's a small lawn or a full landscape overhaul, I show up and I get it right.</p>
+      <p class="about-name">Harlan</p>
+      <p class="about-title-tag">Owner &amp; Head Landscaper</p>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <p class="section-label">Happy customers</p>
+    <h2 class="section-title">What People Are Saying</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <blockquote>"Harlan completely transformed our backyard. We went from a patchy mess to a beautiful, low-maintenance garden. He listened to exactly what we wanted and delivered beyond our expectations."</blockquote>
+        <div class="testimonial-author">
+          <div class="author-photo">
+            <!-- <img src="customer-1.jpg" alt="Sandra M."> -->
+          </div>
+          <div class="author-info">
+            <p class="author-name">Sandra M.</p>
+            <p class="author-location">Riverside, CA</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <blockquote>"We've used Harlan for weekly lawn care for two years. Reliable, thorough, and my yard has never looked better. He noticed a drainage issue we didn't even know we had and fixed it proactively."</blockquote>
+        <div class="testimonial-author">
+          <div class="author-photo">
+            <!-- <img src="customer-2.jpg" alt="Tom &amp; Diane K."> -->
+          </div>
+          <div class="author-info">
+            <p class="author-name">Tom &amp; Diane K.</p>
+            <p class="author-location">Corona, CA</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <blockquote>"Hired Harlan to redesign our front yard before selling our home. The curb appeal went through the roof — our realtor said it was a major factor in getting multiple offers. Worth every penny."</blockquote>
+        <div class="testimonial-author">
+          <div class="author-photo">
+            <!-- <img src="customer-3.jpg" alt="Marcus T."> -->
+          </div>
+          <div class="author-info">
+            <p class="author-name">Marcus T.</p>
+            <p class="author-location">Ontario, CA</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Get in touch</p>
+    <h2 class="section-title">Ready to get started?</h2>
+    <p class="contact-desc">Book a free consultation and Harlan will call you back within one business day to talk through your project — no pressure, no commitment.</p>
+    <div class="contact-details">
+      <span class="contact-detail">📞 (555) 000-0000</span>
+      <span class="contact-detail">📍 Serving the Inland Empire, CA</span>
+    </div>
+    <button class="btn btn-primary" onclick="document.getElementById('bookFab').click()">Book a Free Consultation</button>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 Harlan's Gardens — Plants, Landscaping &amp; Lawns. All rights reserved.</p>
+  </footer>
+
+  <!-- BOOKING WIDGET -->
+  <button class="book-fab" id="bookFab">Book a Consultation</button>
+
+  <div class="book-overlay" id="bookOverlay" aria-hidden="true">
+    <div class="book-modal" role="dialog" aria-modal="true" aria-labelledby="bookModalTitle">
+      <button class="book-close" id="bookClose" aria-label="Close">&times;</button>
+      <h2 class="book-title" id="bookModalTitle">Book a Consultation</h2>
+      <p class="book-subtitle">Choose how you'd like to connect with Harlan.</p>
+
+      <div class="book-toggle" role="group" aria-label="Consultation type">
+        <button class="book-toggle-btn active" data-type="call" id="toggleCall">Phone or Video Call</button>
+        <button class="book-toggle-btn" data-type="onsite" id="toggleOnsite">On-Site Visit</button>
+      </div>
+
+      <form id="bookForm" novalidate>
+        <div class="book-field">
+          <label for="bookName">Your Name</label>
+          <input type="text" id="bookName" name="name" placeholder="Jane Smith" required autocomplete="name">
+        </div>
+        <div class="book-field">
+          <label for="bookPhone">Phone Number</label>
+          <input type="tel" id="bookPhone" name="phone" placeholder="(555) 000-0000" required autocomplete="tel">
+        </div>
+        <div class="book-field" id="addressField" hidden>
+          <label for="bookAddress">Property Address</label>
+          <input type="text" id="bookAddress" name="address" placeholder="123 Main St, Riverside, CA" autocomplete="street-address">
+          <p class="book-field-hint">So Harlan knows where to come for the visit.</p>
+        </div>
+        <div class="book-field">
+          <label for="bookDatetime">Preferred time for your consultation <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input type="datetime-local" id="bookDatetime" name="datetime">
+          <p class="book-field-hint">Harlan will confirm the time when he reaches out.</p>
+        </div>
+        <button type="submit" class="book-submit" id="bookSubmit">Request Consultation</button>
+        <p class="book-status" id="bookStatus" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="booking.js"></script>
+
+</body>
+</html>
