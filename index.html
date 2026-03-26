@@ -5,21 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Harlan's Gardens — Plants, Landscaping & Lawns</title>
   <link rel="stylesheet" href="booking.css">
-  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --hero:        #384E4E;
-      --hero-dark:   #263636;
+      --terracotta:  #84422a;
       --accent:      #6e9e8a;
       --cream:       #f0ebe0;
       --tan:         #ddd4be;
       --stone:       #c2b89e;
       --brown:       #7a5c3a;
       --text:        #252420;
+      --text-dark:   #362f26;
       --muted:       #6b6356;
-      --error:       #b84c4c;
+      --muted-warm:  #9e886e;
       --sans: system-ui, -apple-system, sans-serif;
     }
 
@@ -44,21 +43,24 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 50;
-      background: rgba(38, 54, 54, 0.96);
-      backdrop-filter: blur(6px);
+      background: var(--cream);
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 48px;
+      padding: 10px 48px;
     }
 
     .nav-logo {
-      color: var(--cream);
-      font-size: 18px;
-      font-weight: 600;
+      display: block;
+      height: 61px;
       text-decoration: none;
-      letter-spacing: 0.02em;
+    }
+
+    .nav-logo img {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
     }
 
     .nav-links {
@@ -69,18 +71,19 @@
     }
 
     .nav-links a {
-      color: rgba(245,240,232,0.8);
+      color: #000;
       text-decoration: none;
       font-size: 14px;
       letter-spacing: 0.05em;
-      transition: color 0.2s;
+      transition: opacity 0.2s;
     }
 
-    .nav-links a:hover { color: var(--cream); }
+    .nav-links a:hover { opacity: 0.6; }
 
     /* ── HERO ────────────────────────────────── */
     #hero {
       height: 100vh;
+      height: 100svh;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -92,7 +95,7 @@
     .hero-photo {
       position: absolute;
       inset: 0;
-      background: var(--hero);
+      background: #384e4e;
     }
 
     .hero-photo img {
@@ -102,49 +105,54 @@
 
     .hero-overlay {
       position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.15) 55%, transparent 100%);
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 385px;
+      background: linear-gradient(to top, rgba(15,15,14,0.64) 36%, rgba(125,113,89,0) 97%);
     }
 
     .hero-content {
       position: relative;
-      max-width: 680px;
+      max-width: 800px;
       display: flex;
       flex-direction: column;
       gap: 20px;
     }
 
     .hero-content h1 {
-      font-size: 72px;
-      font-weight: 400;
-      color: #fff;
-      line-height: 1.1;
-    }
-
-    .hero-content p {
-      font-size: 18px;
+      font-size: 48px;
+      font-weight: 600;
       color: rgba(255,255,255,0.85);
-      max-width: 480px;
+      line-height: 1.0;
     }
 
     .btn {
       display: inline-block;
-      padding: 14px 32px;
-      font-size: 14px;
-      letter-spacing: 0.06em;
+      padding: 10px 40px;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: 0.042em;
       text-decoration: none;
       border: none;
       cursor: pointer;
       font-family: var(--sans);
-      transition: background 0.2s, color 0.2s;
+      transition: opacity 0.2s;
     }
 
-    .btn-primary {
-      background: var(--accent);
+    .btn-cream {
+      background: var(--cream);
+      color: #000;
+    }
+
+    .btn-cream:hover { opacity: 0.85; cursor: pointer; }
+
+    .btn-terracotta {
+      background: var(--terracotta);
       color: #fff;
     }
 
-    .btn-primary:hover { background: var(--hero); }
+    .btn-terracotta:hover { opacity: 0.85; cursor: pointer; }
 
     /* ── SERVICES ────────────────────────────── */
     #services {
@@ -165,7 +173,7 @@
     .section-title {
       font-size: 44px;
       font-weight: 400;
-      color: var(--hero-dark);
+      color: var(--terracotta);
       margin-bottom: 60px;
     }
 
@@ -181,6 +189,7 @@
       flex-direction: column;
       overflow: hidden;
       border-radius: 2px;
+      background: #fff;
     }
 
     .service-card-photo {
@@ -192,11 +201,8 @@
     }
 
     .service-card-photo img {
-      width: 100%;
       height: 100%;
-      object-fit: cover;
       object-position: center;
-      display: block;
     }
 
     .service-card-body {
@@ -204,7 +210,6 @@
       flex-direction: column;
       gap: 12px;
       padding: 28px;
-      border-top: 3px solid var(--accent);
     }
 
     .service-icon { font-size: 28px; }
@@ -212,7 +217,7 @@
     .service-card h3 {
       font-size: 22px;
       font-weight: 400;
-      color: var(--hero-dark);
+      color: var(--terracotta);
     }
 
     .service-card p {
@@ -243,32 +248,42 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+      gap: 20px;
+    }
+
+    .about-text .section-label { color: var(--muted-warm); margin-bottom: 0; }
+    .about-text .section-title { color: var(--text-dark); margin-bottom: 0; }
+
+    .about-body {
+      font-size: 16px;
+      color: var(--text-dark);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
       gap: 16px;
     }
 
-    .about-text .section-title { margin-bottom: 8px; }
-
     .about-name {
-      margin-top: 16px;
       font-size: 18px;
-      color: var(--hero-dark);
+      color: var(--text-dark);
+      line-height: 1.6;
     }
 
     .about-title-tag {
       font-size: 13px;
-      color: var(--accent);
+      color: var(--muted-warm);
       letter-spacing: 0.08em;
     }
 
     /* ── TESTIMONIALS ────────────────────────── */
     #testimonials {
       padding: 100px 48px;
-      background: var(--hero-dark);
+      background: var(--terracotta);
       display: flex;
       flex-direction: column;
     }
 
-    #testimonials .section-label { color: var(--accent); }
+    #testimonials .section-label { color: rgba(245,240,232,0.5); }
     #testimonials .section-title { color: var(--cream); }
 
     .testimonials-grid {
@@ -281,7 +296,7 @@
       flex: 1;
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.1);
-      padding: 36px;
+      padding: 37px;
       display: flex;
       flex-direction: column;
       gap: 24px;
@@ -292,6 +307,7 @@
       color: rgba(245,240,232,0.85);
       line-height: 1.8;
       font-style: italic;
+      flex: 1;
     }
 
     .testimonial-author {
@@ -305,9 +321,16 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: var(--hero);
+      background: var(--tan);
       overflow: hidden;
       flex-shrink: 0;
+    }
+
+    .author-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
     }
 
     .author-info {
@@ -331,28 +354,21 @@
     /* ── CONTACT ─────────────────────────────── */
     #contact {
       padding: 100px 48px;
-      background: var(--tan);
+      background: var(--cream);
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 32px;
+      gap: 20px;
     }
 
-    #contact .section-title { margin-bottom: 0; }
+    #contact .section-title { color: var(--terracotta); margin-bottom: 0; }
 
     .contact-desc {
       font-size: 17px;
-      color: var(--muted);
+      color: var(--terracotta);
       line-height: 1.8;
-      max-width: 520px;
-    }
-
-    .contact-details {
-      display: flex;
-      flex-direction: row;
-      gap: 40px;
-      justify-content: center;
+      max-width: 485px;
     }
 
     .contact-detail {
@@ -363,32 +379,91 @@
 
     /* ── FOOTER ──────────────────────────────── */
     footer {
-      background: var(--hero-dark);
-      color: rgba(245,240,232,0.5);
+      background: var(--terracotta);
+      color: rgba(255,255,255,0.9);
       text-align: center;
       padding: 32px 48px;
       font-size: 13px;
     }
 
+    /* ── HAMBURGER ───────────────────────────── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #000;
+      border-radius: 2px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: 81px;
+      left: 0; right: 0;
+      background: var(--cream);
+      z-index: 49;
+      flex-direction: column;
+      padding: 16px 24px 24px;
+      gap: 0;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .nav-mobile.open { display: flex; }
+
+    .nav-mobile a {
+      color: #000;
+      text-decoration: none;
+      font-size: 16px;
+      letter-spacing: 0.05em;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      transition: opacity 0.2s;
+    }
+
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { opacity: 0.6; }
+
+    /* ── SCROLL OFFSET (fixed nav) ───────────── */
+    #services, #about, #testimonials, #contact {
+      scroll-margin-top: 81px;
+    }
+
     /* ── RESPONSIVE ──────────────────────────── */
     @media (max-width: 900px) {
-      nav { padding: 16px 24px; }
+      nav { padding: 10px 24px; }
       .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
 
       #hero, #services, #about, #testimonials, #contact { padding-left: 24px; padding-right: 24px; }
 
-      .hero-content h1 { font-size: 48px; }
+      .hero-content h1 { font-size: 36px; }
       .section-title   { font-size: 32px; }
 
       .services-grid, .testimonials-grid { flex-direction: column; }
       .service-card-photo { height: 200px; }
       #about { flex-direction: column; gap: 48px; }
       .about-photo { aspect-ratio: 3/2; }
-      .contact-details { flex-direction: column; gap: 12px; }
     }
 
     @media (max-width: 600px) {
-      .hero-content h1 { font-size: 36px; }
+      .hero-content h1 { font-size: 28px; }
     }
   </style>
 </head>
@@ -396,25 +471,39 @@
 
   <!-- NAV -->
   <nav>
-    <a href="#hero" class="nav-logo">Harlan's Gardens</a>
-    <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#testimonials">Reviews</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+    <a href="#hero" class="nav-logo">
+      <img src="images/logo.png" alt="Harlan's Gardens">
+    </a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </nav>
+
+  <!-- MOBILE NAV DRAWER -->
+  <div class="nav-mobile" id="navMobile">
+    <a href="#services" class="nav-mobile-link">Services</a>
+    <a href="#about" class="nav-mobile-link">About</a>
+    <a href="#testimonials" class="nav-mobile-link">Reviews</a>
+    <a href="#contact" class="nav-mobile-link">Contact</a>
+  </div>
 
   <!-- HERO -->
   <section id="hero">
     <div class="hero-photo">
-      <!-- Replace with: <img src="your-photo.jpg" alt="Harlan's Gardens landscaping work"> -->
+      <img src="images/hero.jpg" alt="Harlan's Gardens landscaping work">
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1>Harlan's Gardens</h1>
-      <p>Plants, Landscaping &amp; Lawns — beautifying homes and properties across the area since 1998.</p>
-      <a href="#contact" class="btn btn-primary">Book a Free Consultation</a>
+      <h1>Plants, Landscaping &amp; Lawns — beautifying homes and properties across the Front Range</h1>
+      <a href="#contact" class="btn btn-cream">Book a Free Consultation</a>
     </div>
   </section>
 
@@ -425,32 +514,32 @@
     <div class="services-grid">
       <div class="service-card">
         <div class="service-card-photo">
-          <!-- Replace with: <img src="plants.jpg" alt="Describe what's shown, e.g. 'Colorful native perennials planted along a garden bed border'"> -->
+          <img src="images/service-plants.jpg" alt="Colorful flowers and garden beds">
         </div>
         <div class="service-card-body">
           <div class="service-icon">🌿</div>
           <h3>Plants</h3>
-          <p>Expert plant selection, installation, and ongoing care tailored to your soil, climate, and vision. From flowering perennials to native shrubs, we'll make it thrive.</p>
+          <p>Expert plant selection, bed design, and ongoing care tailored to your soil and your vision. From mulching and weeding to developing custom grow plans, we're here to help you thrive.</p>
         </div>
       </div>
       <div class="service-card">
         <div class="service-card-photo">
-          <!-- Replace with: <img src="landscaping.jpg" alt="Describe what's shown, e.g. 'Stone patio with retaining wall and garden beds installed in a residential backyard'"> -->
+          <img src="images/service-landscaping.jpg" alt="Landscaping and hardscaping work">
         </div>
         <div class="service-card-body">
           <div class="service-icon">🏡</div>
           <h3>Landscaping</h3>
-          <p>Full-service landscape design and installation — patios, walkways, retaining walls, garden beds, grading, and drainage. We transform outdoor spaces from the ground up.</p>
+          <p>We transform outdoor spaces from the ground up: Plant beds, hardscaping, fencing, pathways, patios, and more.</p>
         </div>
       </div>
       <div class="service-card">
         <div class="service-card-photo">
-          <!-- Replace with: <img src="lawns.jpg" alt="Describe what's shown, e.g. 'Freshly mowed and edged lawn with clean lines alongside a garden border'"> -->
+          <img src="images/service-lawns.jpg" alt="Well-maintained lawn">
         </div>
         <div class="service-card-body">
           <div class="service-icon">✂️</div>
           <h3>Lawns</h3>
-          <p>Mowing, edging, aeration, overseeding, fertilization, and seasonal cleanup. We keep your lawn healthy, green, and looking its best year-round.</p>
+          <p>Mowing, edging, aeration, fertilization, seasonal cleanup, or even xeriscaping. We keep your lawn healthy and looking its best year-round.</p>
         </div>
       </div>
     </div>
@@ -459,15 +548,23 @@
   <!-- ABOUT -->
   <section id="about">
     <div class="about-photo">
-      <!-- Replace with: <img src="harlan-photo.jpg" alt="Harlan"> -->
+      <img src="images/about-harlan.jpg" alt="Harlan Kelly">
     </div>
     <div class="about-text">
-      <p class="section-label">Meet the gardener</p>
-      <h2 class="section-title">Hi, I'm Harlan.</h2>
-      <p>I've been working with plants and land my whole life. What started as helping my grandfather tend his garden grew into a lifelong passion — and eventually, a business built on honest work and genuine care for the outdoors.</p>
-      <p>Every property I work on gets my full attention. I don't take shortcuts, I don't rush the work, and I take real pride in leaving a yard better than I found it. Whether it's a small lawn or a full landscape overhaul, I show up and I get it right.</p>
-      <p class="about-name">Harlan</p>
-      <p class="about-title-tag">Owner &amp; Head Landscaper</p>
+      <div>
+        <p class="section-label">Meet the gardener</p>
+        <h2 class="section-title">Hi, I'm Harlan.</h2>
+      </div>
+      <div class="about-body">
+        <p>Hi I'm Harlan. You might have heard my name from the rest of this website. This is my little gardening and landscaping business.</p>
+        <p>From full backyard overhauls to regular garden maintenance, I'm here to help your garden dream become your daily joy.</p>
+        <p>Harlan's Gardens is about growth and care. My hands-on approach makes it easy to fill a garden bed full of your favorite flowers, cut your lawn just right, or turn hard clay dirt into softer nutrient-rich soil. So if you're a new gardener who wants a little horticulture therapy or a permaculture enthusiast who needs an extra hand with your compost plan, I'm here to help.</p>
+        <p>So let's talk about how you want to grow your backyard and cultivate a space you love.</p>
+      </div>
+      <div>
+        <p class="about-name">Harlan Kelly</p>
+        <p class="about-title-tag">Owner &amp; Head Landscaper</p>
+      </div>
     </div>
   </section>
 
@@ -477,38 +574,38 @@
     <h2 class="section-title">What People Are Saying</h2>
     <div class="testimonials-grid">
       <div class="testimonial">
-        <blockquote>"Harlan completely transformed our backyard. We went from a patchy mess to a beautiful, low-maintenance garden. He listened to exactly what we wanted and delivered beyond our expectations."</blockquote>
+        <blockquote>"Harlan does a great job with every project they do for me. They made a beautiful walkway for me so I don't trip when I walk around my backyard."</blockquote>
         <div class="testimonial-author">
           <div class="author-photo">
-            <!-- <img src="customer-1.jpg" alt="Sandra M."> -->
+            <img src="images/reviewer-diana.jpg" alt="Diana T.">
           </div>
           <div class="author-info">
-            <p class="author-name">Sandra M.</p>
-            <p class="author-location">Riverside, CA</p>
+            <p class="author-name">Diana T.</p>
+            <p class="author-location">Denver, CO</p>
           </div>
         </div>
       </div>
       <div class="testimonial">
-        <blockquote>"We've used Harlan for weekly lawn care for two years. Reliable, thorough, and my yard has never looked better. He noticed a drainage issue we didn't even know we had and fixed it proactively."</blockquote>
+        <blockquote>"Harlan was excellent while helping me with my condo. They were easy to work with, their scheduling was flexible, and they explained everything in a way I could understand. I would recommend Harlan to anyone."</blockquote>
         <div class="testimonial-author">
           <div class="author-photo">
-            <!-- <img src="customer-2.jpg" alt="Tom &amp; Diane K."> -->
+            <img src="images/reviewer-jax.jpg" alt="Jax S.">
           </div>
           <div class="author-info">
-            <p class="author-name">Tom &amp; Diane K.</p>
-            <p class="author-location">Corona, CA</p>
+            <p class="author-name">Jax S.</p>
+            <p class="author-location">Aurora, CO</p>
           </div>
         </div>
       </div>
       <div class="testimonial">
-        <blockquote>"Hired Harlan to redesign our front yard before selling our home. The curb appeal went through the roof — our realtor said it was a major factor in getting multiple offers. Worth every penny."</blockquote>
+        <blockquote>"I have hired Harlan over the years and have always been impressed by their dedication on any task. They possess not only a cast-iron work ethic but a creative mind that can find solutions to any problem."</blockquote>
         <div class="testimonial-author">
           <div class="author-photo">
-            <!-- <img src="customer-3.jpg" alt="Marcus T."> -->
+            <img src="images/reviewer-andrew.jpg" alt="Andrew O.">
           </div>
           <div class="author-info">
-            <p class="author-name">Marcus T.</p>
-            <p class="author-location">Ontario, CA</p>
+            <p class="author-name">Andrew O.</p>
+            <p class="author-location">Denver, CO</p>
           </div>
         </div>
       </div>
@@ -520,11 +617,8 @@
     <p class="section-label">Get in touch</p>
     <h2 class="section-title">Ready to get started?</h2>
     <p class="contact-desc">Book a free consultation and Harlan will call you back within one business day to talk through your project — no pressure, no commitment.</p>
-    <div class="contact-details">
-      <span class="contact-detail">📞 (555) 000-0000</span>
-      <span class="contact-detail">📍 Serving the Inland Empire, CA</span>
-    </div>
-    <button class="btn btn-primary" onclick="document.getElementById('bookFab').click()">Book a Free Consultation</button>
+    <span class="contact-detail">📍 Serving the Denver metro area</span>
+    <button class="btn btn-terracotta" onclick="document.getElementById('bookFab').click()">Book a Free Consultation</button>
   </section>
 
   <!-- FOOTER -->
@@ -557,7 +651,7 @@
         </div>
         <div class="book-field" id="addressField" hidden>
           <label for="bookAddress">Property Address</label>
-          <input type="text" id="bookAddress" name="address" placeholder="123 Main St, Riverside, CA" autocomplete="street-address">
+          <input type="text" id="bookAddress" name="address" placeholder="123 Main St, Denver, CO" autocomplete="street-address">
           <p class="book-field-hint">So Harlan knows where to come for the visit.</p>
         </div>
         <div class="book-field">
@@ -572,6 +666,25 @@
   </div>
 
   <script src="booking.js"></script>
+  <script>
+    const hamburger = document.getElementById('navHamburger');
+    const mobileNav = document.getElementById('navMobile');
+
+    hamburger.addEventListener('click', () => {
+      const open = mobileNav.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
+    });
+
+    // Close menu when a link is tapped
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', false);
+      });
+    });
+  </script>
 
 </body>
 </html>

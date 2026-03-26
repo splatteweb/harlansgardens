@@ -1,16 +1,6 @@
-// Harlan's Gardens — Booking Widget Backend
-//
-// SETUP:
-//   1. In Google Sheets, open Extensions > Apps Script and paste this file.
-//   2. Click Deploy > New Deployment > Web App.
-//   3. Execute as: Me | Who has access: Anyone
-//   4. Copy the /exec URL into booking.js as APPS_SCRIPT_URL.
-//
-// SHEET: The script writes to a tab named "Bookings" in the container spreadsheet.
+var SHEET_NAME = 'Bookings';
 
-const SHEET_NAME = 'Bookings';
-
-const HEADERS = [
+var HEADERS = [
   'Timestamp',
   'Type',
   'Name',
@@ -18,13 +8,35 @@ const HEADERS = [
   'Address',
   'Preferred Datetime',
   'Source',
-  'Calendar Event ID',   // reserved — populated once Google Calendar is integrated
+  'Calendar Event ID'
 ];
 
-function doPost(e) {
+function formatDate(date) {
+  var month   = date.getMonth() + 1;
+  var day     = date.getDate();
+  var year    = date.getFullYear();
+  var hours   = date.getHours();
+  var minutes = date.getMinutes();
+  var seconds = date.getSeconds();
+  var ampm    = hours >= 12 ? 'PM' : 'AM';
+  hours       = hours % 12 || 12;
+  minutes     = minutes < 10 ? '0' + minutes : minutes;
+  seconds     = seconds < 10 ? '0' + seconds : seconds;
+  return month + '-' + day + '-' + year + ', ' + hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+}
+
+function doGet(e) {
+  if (!e || !e.parameter || !e.parameter.name) {
+    return ContentService
+      .createTextOutput('Harlans Gardens booking endpoint is live.')
+      .setMimeType(ContentService.MimeType.TEXT);
+  }
+
   try {
-    var data   = JSON.parse(e.postData.contents);
-    var sheet  = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+    var p = e.parameter;
+    var sheet = SpreadsheetApp
+      .openById('1JRgiCyUqLseiMlj8Tb6zWNOuNe8FXmQOvesA804NygM')
+      .getSheetByName(SHEET_NAME);
 
     if (sheet.getLastRow() === 0) {
       sheet.appendRow(HEADERS);
@@ -32,38 +44,15 @@ function doPost(e) {
     }
 
     sheet.appendRow([
-      new Date().toISOString(),
-      data.type             || '',
-      data.name             || '',
-      data.phone            || '',
-      data.address          || '',
-      data.datetime         || '',
-      data.source           || '',
-      data.calendarEventId  || '',
+      formatDate(new Date()),
+      p.type || '',
+      p.name || '',
+      p.phone || '',
+      p.address || '',
+      p.datetime ? formatDate(new Date(p.datetime)) : '',
+      p.source || '',
+      p.calendarEventId || ''
     ]);
-
-    // ── FUTURE: Google Calendar integration ─────────────────────────────────
-    // Uncomment the block below once you're ready to accept bookings on a
-    // specific calendar. Requires enabling the Calendar API in Apps Script
-    // (Services > Google Calendar API).
-    //
-    // if (data.datetime) {
-    //   var cal   = CalendarApp.getCalendarById('YOUR_CALENDAR_ID');
-    //   var start = new Date(data.datetime);
-    //   var end   = new Date(start.getTime() + 60 * 60 * 1000); // 1-hour slot
-    //   var event = cal.createEvent(
-    //     'Consultation — ' + data.name,
-    //     start,
-    //     end,
-    //     {
-    //       description: 'Type: '    + data.type    + '\n' +
-    //                    'Phone: '   + data.phone   + '\n' +
-    //                    'Address: ' + data.address,
-    //     }
-    //   );
-    //   sheet.getRange(sheet.getLastRow(), 8).setValue(event.getId());
-    // }
-    // ────────────────────────────────────────────────────────────────────────
 
     return ContentService
       .createTextOutput(JSON.stringify({ status: 'ok' }))
@@ -74,11 +63,4 @@ function doPost(e) {
       .createTextOutput(JSON.stringify({ status: 'error', message: err.message }))
       .setMimeType(ContentService.MimeType.JSON);
   }
-}
-
-// Allows confirming the endpoint is live by visiting the /exec URL in a browser.
-function doGet() {
-  return ContentService
-    .createTextOutput("Harlan's Gardens booking endpoint is live.")
-    .setMimeType(ContentService.MimeType.TEXT);
 }

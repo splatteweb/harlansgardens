@@ -1,6 +1,6 @@
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 // After deploying the Google Apps Script Web App, paste your /exec URL here.
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxaPreQuo84MqAoSTA875ELPc3XNxqcSxFA8FITxSGGbLsrwZxaA0okcB_8YtDtFQAmCA/exec';
 
 // ── DOM REFS ──────────────────────────────────────────────────────────────────
 const fab          = document.getElementById('bookFab');
@@ -61,7 +61,7 @@ form.addEventListener('submit', async (e) => {
     type:     consultationType,
     name:     document.getElementById('bookName').value.trim(),
     phone:    document.getElementById('bookPhone').value.trim(),
-    address:  consultationType === 'onsite' ? addressInput.value.trim() : '',
+    address:  addressInput.value.trim(),
     datetime: document.getElementById('bookDatetime').value || '',
     source:   'booking-widget',
     // calendarEventId: reserved for future Google Calendar integration
@@ -77,11 +77,9 @@ form.addEventListener('submit', async (e) => {
     // no-cors mode. The request fires successfully but the response is
     // opaque — we optimistically show success and rely on the sheet as
     // the source of truth. Network failures are caught in the catch block.
-    await fetch(APPS_SCRIPT_URL, {
-      method:  'POST',
-      mode:    'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(payload),
+    await fetch(`${APPS_SCRIPT_URL}?${new URLSearchParams(payload).toString()}`, {
+      method: 'GET',
+      mode:   'no-cors',
     });
 
     statusEl.textContent = "Thanks! Harlan will be in touch within one business day.";
