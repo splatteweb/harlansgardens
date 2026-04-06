@@ -61,8 +61,10 @@ form.addEventListener('submit', async (e) => {
     type:     consultationType,
     name:     document.getElementById('bookName').value.trim(),
     phone:    document.getElementById('bookPhone').value.trim(),
+    email:    document.getElementById('bookEmail').value.trim(),
     address:  addressInput.value.trim(),
     datetime: document.getElementById('bookDatetime').value || '',
+    notes:    document.getElementById('bookNotes').value.trim(),
     source:   'booking-widget',
     // calendarEventId: reserved for future Google Calendar integration
   };
@@ -87,7 +89,7 @@ form.addEventListener('submit', async (e) => {
     resetForm();
 
   } catch {
-    statusEl.textContent = "Something went wrong — please call us directly at (555) 000-0000.";
+    statusEl.textContent = "Something went wrong — please try again or email us at harlansgardens@gmail.com.";
     statusEl.classList.add('book-status--error');
 
   } finally {

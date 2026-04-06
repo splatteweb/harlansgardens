@@ -155,14 +155,14 @@
       color: #000;
     }
 
-    .btn-cream:hover { opacity: 0.85; cursor: pointer; }
+    .btn-cream:hover { opacity: 0.85; }
 
     .btn-terracotta {
       background: var(--terracotta);
       color: #fff;
     }
 
-    .btn-terracotta:hover { opacity: 0.85; cursor: pointer; }
+    .btn-terracotta:hover { opacity: 0.85; }
 
     /* ── SERVICES ────────────────────────────── */
     #services {
@@ -387,6 +387,73 @@
       letter-spacing: 0.03em;
     }
 
+    /* ── MERCH ───────────────────────────────── */
+    #merch {
+      padding: 100px 48px;
+      background: var(--tan);
+      display: flex;
+      flex-direction: row;
+      gap: 80px;
+    }
+
+    .merch-images {
+      flex: 1;
+    }
+
+    .merch-photo {
+      height: 100%;
+      border-radius: 2px;
+      overflow: hidden;
+      background: var(--stone);
+    }
+
+    .merch-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .merch-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .merch-details .section-label { color: var(--muted-warm); margin-bottom: 0; }
+    .merch-details .section-title { color: var(--text-dark); margin-bottom: 0; }
+
+    .merch-desc {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .merch-meta {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .merch-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .merch-price {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--terracotta);
+    }
+
+    .merch-sizes {
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+
     /* ── FOOTER ──────────────────────────────── */
     footer {
       background: var(--terracotta);
@@ -451,7 +518,7 @@
     .nav-mobile a:hover { opacity: 0.6; }
 
     /* ── SCROLL OFFSET (fixed nav) ───────────── */
-    #services, #about, #testimonials, #contact {
+    #services, #about, #testimonials, #contact, #merch {
       scroll-margin-top: 81px;
     }
 
@@ -461,14 +528,14 @@
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
 
-      #hero, #services, #about, #testimonials, #contact { padding-left: 24px; padding-right: 24px; }
+      #hero, #services, #about, #testimonials, #contact, #merch { padding-left: 24px; padding-right: 24px; }
 
       .hero-content h1 { font-size: 36px; }
       .section-title   { font-size: 32px; }
 
       .services-grid, .testimonials-grid { flex-direction: column; }
       .service-card-photo { height: 200px; }
-      #about { flex-direction: column; gap: 48px; }
+      #about, #merch { flex-direction: column; gap: 48px; }
       .about-photo { aspect-ratio: 4/5; max-width: 360px; margin: 0 auto; }
     }
 
@@ -490,6 +557,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#testimonials">Reviews</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><a href="#merch">Shop</a></li>
       </ul>
       <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -503,6 +571,7 @@
     <a href="#about" class="nav-mobile-link">About</a>
     <a href="#testimonials" class="nav-mobile-link">Reviews</a>
     <a href="#contact" class="nav-mobile-link">Contact</a>
+    <a href="#merch" class="nav-mobile-link">Shop</a>
   </div>
 
   <!-- HERO -->
@@ -631,6 +700,26 @@
     <button class="btn btn-terracotta" onclick="document.getElementById('bookFab').click()">Book a Free Consultation</button>
   </section>
 
+  <!-- MERCH -->
+  <section id="merch">
+    <div class="merch-images">
+      <div class="merch-photo">
+        <img src="https://assets.bigcartel.com/product_images/422177316/harlan+shirt+pic+crop.png" alt="Harlan's Gardens First Shirt">
+      </div>
+    </div>
+    <div class="merch-details">
+      <p class="section-label">Support the project</p>
+      <h2 class="section-title">Harlan's Gardens Shirt</h2>
+      <p class="merch-desc">Help support Harlan's Gardens with this one-time print shirt. This is a preorder — the exact ship date is TBD.</p>
+      <div class="merch-meta">
+        <span class="merch-name">Harlan's Gardens First Shirt</span>
+        <span class="merch-price">$30.00</span>
+      </div>
+      <p class="merch-sizes">Available in S, M, L, XL, XXL</p>
+      <a href="https://harlansgardens.bigcartel.com/product/harlans-gardens-first-shirt" class="btn btn-terracotta" target="_blank" rel="noopener">Buy Now</a>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <p>&copy; 2026 Harlan's Gardens — Plants, Landscaping &amp; Lawns. All rights reserved.</p>
@@ -665,9 +754,18 @@
           <p class="book-field-hint">So Harlan knows where to come for the visit.</p>
         </div>
         <div class="book-field">
+          <label for="bookEmail">Email <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+          <input type="email" id="bookEmail" name="email" placeholder="jane@example.com" autocomplete="email">
+          <p class="book-field-hint">We'll send you a confirmation if you provide one.</p>
+        </div>
+        <div class="book-field">
           <label for="bookDatetime">Preferred time for your consultation <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
           <input type="datetime-local" id="bookDatetime" name="datetime">
           <p class="book-field-hint">Harlan will confirm the time when he reaches out.</p>
+        </div>
+        <div class="book-field">
+          <label for="bookNotes">Anything Harlan should know? <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+          <textarea id="bookNotes" name="notes" placeholder="Tell us about your yard, project ideas, or any questions you have." rows="3"></textarea>
         </div>
         <button type="submit" class="book-submit" id="bookSubmit">Request Consultation</button>
         <p class="book-status" id="bookStatus" aria-live="polite"></p>

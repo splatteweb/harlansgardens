@@ -1,12 +1,16 @@
-var SHEET_NAME = 'Bookings';
+var SHEET_NAME    = 'Bookings';
+var HARLAN_EMAIL  = 'harlansgardens@gmail.com';
+var SPREADSHEET_ID = '1JRgiCyUqLseiMlj8Tb6zWNOuNe8FXmQOvesA804NygM';
 
 var HEADERS = [
   'Timestamp',
   'Type',
   'Name',
   'Phone',
+  'Email',
   'Address',
   'Preferred Datetime',
+  'Notes',
   'Source',
   'Calendar Event ID'
 ];
@@ -35,7 +39,7 @@ function doGet(e) {
   try {
     var p = e.parameter;
     var sheet = SpreadsheetApp
-      .openById('1JRgiCyUqLseiMlj8Tb6zWNOuNe8FXmQOvesA804NygM')
+      .openById(SPREADSHEET_ID)
       .getSheetByName(SHEET_NAME);
 
     if (sheet.getLastRow() === 0) {
@@ -43,16 +47,26 @@ function doGet(e) {
       sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
     }
 
+    var preferredDatetime = p.datetime ? formatDate(new Date(p.datetime)) : '';
+
     sheet.appendRow([
       formatDate(new Date()),
       p.type || '',
       p.name || '',
       p.phone || '',
+      p.email || '',
       p.address || '',
-      p.datetime ? formatDate(new Date(p.datetime)) : '',
+      preferredDatetime,
+      p.notes || '',
       p.source || '',
       p.calendarEventId || ''
     ]);
+
+    sendHarlanNotification(p, preferredDatetime);
+
+    if (p.email) {
+      sendCustomerConfirmation(p);
+    }
 
     return ContentService
       .createTextOutput(JSON.stringify({ status: 'ok' }))
@@ -63,4 +77,48 @@ function doGet(e) {
       .createTextOutput(JSON.stringify({ status: 'error', message: err.message }))
       .setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+function sendHarlanNotification(p, preferredDatetime) {
+  var typeLabel = p.type === 'onsite' ? 'On-Site Visit' : 'Phone or Video Call';
+
+  var body = 'New consultation request from ' + p.name + '\n\n'
+    + 'Type:   ' + typeLabel + '\n'
+    + 'Name:   ' + p.name + '\n'
+    + 'Phone:  ' + p.phone + '\n';
+
+  if (p.email) {
+    body += 'Email:  ' + p.email + '\n';
+  }
+  if (p.address) {
+    body += 'Address: ' + p.address + '\n';
+  }
+  if (preferredDatetime) {
+    body += 'Preferred time: ' + preferredDatetime + '\n';
+  }
+  if (p.notes) {
+    body += '\nNotes from customer:\n' + p.notes + '\n';
+  }
+
+  MailApp.sendEmail({
+    to:      HARLAN_EMAIL,
+    subject: 'New consultation request — ' + p.name,
+    body:    body
+  });
+}
+
+function sendCustomerConfirmation(p) {
+  var body = 'Hi ' + p.name + ',\n\n'
+    + 'Thanks for reaching out to Harlan\'s Gardens! Your consultation request has been received.\n\n'
+    + 'Harlan will be in touch within one business day to confirm your appointment and talk through your project.\n\n'
+    + 'In the meantime, feel free to reply to this email with any questions.\n\n'
+    + '— Harlan\n'
+    + 'harlansgardens.com';
+
+  MailApp.sendEmail({
+    to:      p.email,
+    replyTo: HARLAN_EMAIL,
+    subject: 'Your consultation request — Harlan\'s Gardens',
+    body:    body
+  });
 }
