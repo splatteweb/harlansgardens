@@ -1,6 +1,6 @@
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 // After deploying the Google Apps Script Web App, paste your /exec URL here.
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxaPreQuo84MqAoSTA875ELPc3XNxqcSxFA8FITxSGGbLsrwZxaA0okcB_8YtDtFQAmCA/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyEYpI_y86EIz0Q5t2kMUMfwI-849FiFnMYfB_n6Z5BEtKCiDwuhjV25DAGwpNoLevU/exec';
 
 // ── DOM REFS ──────────────────────────────────────────────────────────────────
 const fab          = document.getElementById('bookFab');

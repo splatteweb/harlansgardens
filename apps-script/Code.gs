@@ -109,9 +109,8 @@ function sendHarlanNotification(p, preferredDatetime) {
 
 function sendCustomerConfirmation(p) {
   var body = 'Hi ' + p.name + ',\n\n'
-    + 'Thanks for reaching out to Harlan\'s Gardens! Your consultation request has been received.\n\n'
-    + 'Harlan will be in touch within one business day to confirm your appointment and talk through your project.\n\n'
-    + 'In the meantime, feel free to reply to this email with any questions.\n\n'
+    + 'Thanks for submitting! We\'ve received your consultation request and will be in contact within the next 24 hours.\n\n'
+    + 'If you need anything else or want to give us more information about your project, feel free to reply to this email.\n\n'
     + '— Harlan\n'
     + 'harlansgardens.com';
 
